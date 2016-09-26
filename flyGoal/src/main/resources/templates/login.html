@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"
+xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
+<th:block th:include="fragments/headerinc :: head"></th:block>
+<body class="login">
+
+      <div class="form-signin">
+    <div class="text-center">
+        <img src="assets/img/logo.png" alt="Metis Logo" />
+    </div>
+    <hr/>
+    <div class="tab-content">
+        <div id="login" class="tab-pane active">
+        <div th:if="${param.error}" class="text-muted text-center" style="color:red">
+           	 用户名或密码错误
+        </div>
+        <div th:if="${param.logout}" class="text-muted text-center" style="color:red">
+          	 您已经登出了
+        </div>
+            <form th:action="@{/login}" method="post">
+            
+                <p class="text-muted text-center">
+                    	输入你的用户名以及密码
+                </p>
+                <input type="text" name="username" placeholder="用户名" class="form-control top" />
+                <input type="password" name="password" placeholder="密码" class="form-control bottom" />
+                <div class="checkbox">
+		  <label>
+		    <input type="checkbox" /> 记住我
+		  </label>
+		</div>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">登 录 </button>
+            </form>
+        </div>
+        <div id="forgot" class="tab-pane">
+            <form action="index.html">
+                <p class="text-muted text-center">输入你的验证邮箱</p>
+                <input type="email" placeholder="mail@domain.com" class="form-control" />
+                <br/>
+                <button class="btn btn-lg btn-danger btn-block" type="submit">重置 密码</button>
+            </form>
+        </div>
+        <div id="signup" class="tab-pane">
+            <form th:action="@{/register}" method="post">
+                <input type="text" name="username" placeholder="username" class="form-control top"/>
+                <input type="email" name="email" placeholder="mail@domain.com" class="form-control middle"/>
+                <input type="password" name="password" placeholder="password" class="form-control middle"/>
+                <input type="password" placeholder="re-password" class="form-control bottom"/>
+                <button class="btn btn-lg btn-success btn-block" type="submit">注册</button>
+            </form>
+        </div>
+    </div>
+    <hr/>
+    <div class="text-center">
+        <ul class="list-inline">
+            <li><a class="text-muted" href="#login" data-toggle="tab">登录</a></li>
+            <li><a class="text-muted" href="#forgot" data-toggle="tab">忘记密码</a></li>
+            <li><a class="text-muted" href="#signup" data-toggle="tab">注册</a></li>
+        </ul>
+    </div>
+  </div>
+
+
+    <!--jQuery -->
+    <script  th:src="@{assets/lib/jquery/jquery.js}"></script>
+
+    <!--Bootstrap -->
+    <script th:src="@{assets/lib/bootstrap/js/bootstrap.js}" ></script>
+
+
+    <script type="text/javascript">
+        (function($) {
+            $(document).ready(function() {
+                $('.list-inline li > a').click(function() {
+                    var activeForm = $(this).attr('href') + ' > form';
+                    //console.log(activeForm);
+                    $(activeForm).addClass('animated fadeIn');
+                    //set timer to 1 seconds, after that, unload the animate animation
+                    setTimeout(function() {
+                        $(activeForm).removeClass('animated fadeIn');
+                    }, 1000);
+                });
+            });
+        })(jQuery);
+    </script>
+</body>
+
+</html>

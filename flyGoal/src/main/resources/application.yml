@@ -1,0 +1,56 @@
+spring.profiles.active: ${profiles.active}
+
+
+spring:
+  datasource:
+     url: jdbc:mysql://localhost:3306/jpa_mysql?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=true&amp;autoReconnect=true
+     driver-class-name: com.mysql.jdbc.Driver
+     username: root
+     password: root
+     dbcp:
+      time-between-eviction-runs-millis: 20000
+      validation-query: 'SELECT 1'
+      max-wait: 30000
+      test-while-idle: true
+      min-evictable-idle-time-millis: 28700
+  jpa:
+     show-sql: false
+     hibernate.ddl-auto: update
+     
+  mail:
+    host: smtp.sina.cn
+    port: 25
+    username: 18510855440@sina.cn
+    password: zxy312231
+    test-connection: true
+  http:
+    multipart:
+      max-file-size: 128MB
+      max-request-size: 128MB
+      enabled: true
+    
+logging:
+  path: E:\project\log
+  level:
+    com.zhangxy: info
+
+server:
+  port: 9000
+  contextPath: /fly
+
+security.sessions: if-required
+
+myProps: #自定义的属性和值  
+  simpleProp: simplePropValue  
+  arrayProps: 1,2,3,4,5  
+  listProp1:  
+    - name: abc  
+      value: abcValue  
+    - name: efg  
+      value: efgValue  
+  listProp2:  
+    - config2Value1  
+    - config2Vavlue2  
+  mapProps:  
+    key1: value1  
+    key2: value2  

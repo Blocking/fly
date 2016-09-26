@@ -1,0 +1,45 @@
+<!DOCTYPE>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>jQuery File Upload Example</title>
+</head>
+<body>
+<div>
+  <input id="file1" type="file" name="file1" class="file">
+</div>
+<div>
+  <input id="file2" type="file" name="file2" class="file">
+</div>
+<div>
+  <input id="file3" type="file" name="file3" class="file">
+</div>
+
+<form>
+
+  <input id="fileupload" type="file" name="files[]" hidden="hidden">
+
+  <input type="button" value="Send" class="button">
+
+</form>
+<script src="/fly/js/jquery.js"></script>
+<script src="/fly/js/vendor/jquery.ui.widget.js"></script>
+<script src="/fly/js/jquery.iframe-transport.js"></script>
+<script src="/fly/js/jquery.fileupload.js"></script>
+<script>
+  $(function () {
+
+    $('.button').click(function() {
+      $('#fileupload').fileupload('send', {
+        fileInput: $('.file1')
+      });
+    });
+
+    $('#fileupload').fileupload({
+      url: 'file-upload',
+      dataType: 'json'
+    });
+  });
+</script>
+</body>
+</html>
