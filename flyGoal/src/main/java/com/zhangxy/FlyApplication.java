@@ -8,5 +8,6 @@ public class FlyApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FlyApplication.class, args);
+		System.err.println("ce");
 	}
 }
