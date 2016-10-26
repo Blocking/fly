@@ -8,15 +8,13 @@
  * KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-package com.zhangxy.serviceImpl;
+package com.zhangxy.service.impl;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,11 +27,12 @@ import com.zhangxy.entity.User;
 import com.zhangxy.repository.UserRepository;
 import com.zhangxy.service.UsersService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Repository
 @Transactional
 public class UsersServiceImpl implements UsersService {
-
-    Logger _log = LoggerFactory.getLogger(this.getClass());
 
     @PersistenceContext
     private EntityManager em;
@@ -47,7 +46,7 @@ public class UsersServiceImpl implements UsersService {
             user = this.getUserByUserName(username);
         } catch (final Exception e) {
             e.printStackTrace();
-            this._log.error("根据用户名获取用户异常！！");
+            UsersServiceImpl.log.error("根据用户名获取用户异常！！");
             throw new UsernameNotFoundException("方法异常");
         }
         if (user == null) {

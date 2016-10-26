@@ -14,7 +14,7 @@ spring:
       test-while-idle: true
       min-evictable-idle-time-millis: 28700
   jpa:
-     show-sql: false
+     show-sql: true
      hibernate.ddl-auto: update
      
   mail:
@@ -32,7 +32,7 @@ spring:
 logging:
   path: E:\project\log
   level:
-    com.zhangxy: info
+    com.zhangxy: trace
 
 server:
   port: 9000

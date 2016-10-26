@@ -1,4 +1,4 @@
-package com.zhangxy.mvc;
+package com.zhangxy.controllor;
 
 import java.util.List;
 
