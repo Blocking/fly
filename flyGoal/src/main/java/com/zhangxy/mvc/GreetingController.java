@@ -27,41 +27,40 @@ public class GreetingController {
     private final AtomicLong counter = new AtomicLong();
     @Autowired private  CustomerRepository cr;
     @Autowired private CustomerService  cs;
-    
+
     @Autowired
     private JavaMailSenderImpl mailSender;
 
     @RequestMapping("/greetings")
-    public Greeting greeting(@RequestParam(value="name", defaultValue="World") String name) {
-    	List<Customer> list = cr.findByLastName(name);
-    	StringBuilder sb = new StringBuilder();
-    	list.forEach(p->{
-    		sb.append(p.getId()+"::");
-    	});
-    	sb.append(name);
-        return new Greeting(counter.incrementAndGet(),
-                            String.format(template, sb));
+    public Greeting greeting(@RequestParam(value="name", defaultValue="World") final String name) {
+        final List<Customer> list = this.cr.findByLastName(name);
+        final StringBuilder sb = new StringBuilder();
+        list.forEach(p->{
+            sb.append(p.getId()+"::");
+        });
+        sb.append(name);
+        return new Greeting(this.counter.incrementAndGet(),
+                String.format(GreetingController.template, sb));
     }
     @RequestMapping("/test")
-    public String test(){
-    	cs.findAll();
-    	return "sussess";
+    public List<Customer> test() {
+        return this.cs.findAll();
     }
     @RequestMapping("testMail")
     public User name() {
-    	User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    	MimeMessage message  = mailSender.createMimeMessage();
-    	MimeMessageHelper helper = new MimeMessageHelper(message);
-    	try {
-    		String[] arr = {"516989510@qq.com","1223288714@qq.com"};
-    		helper.setTo(arr);
-			helper.setFrom("18510855440@sina.cn");
-			helper.setText("<h1>你大爷的！</h1>", true);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		}
-    	mailSender.send(message);
-		return user;
-	}
-    
+        final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        final MimeMessage message  = this.mailSender.createMimeMessage();
+        final MimeMessageHelper helper = new MimeMessageHelper(message);
+        try {
+            final String[] arr = {"516989510@qq.com","1223288714@qq.com"};
+            helper.setTo(arr);
+            helper.setFrom("18510855440@sina.cn");
+            helper.setText("<h1>你大爷的！</h1>", true);
+        } catch (final MessagingException e) {
+            e.printStackTrace();
+        }
+        this.mailSender.send(message);
+        return user;
+    }
+
 }
