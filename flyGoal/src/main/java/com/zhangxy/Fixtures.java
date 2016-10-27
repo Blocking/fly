@@ -3,7 +3,6 @@ package com.zhangxy;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.junit.Test;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.Ordered;
@@ -26,7 +25,6 @@ public class Fixtures implements Ordered, ApplicationListener<ContextRefreshedEv
         this.configure();
     }
 
-    @Test
     public void testMail() {
         final JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.sina.cn");

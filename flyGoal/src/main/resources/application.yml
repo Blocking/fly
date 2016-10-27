@@ -1,9 +1,6 @@
-spring.profiles.active: ${profiles.active}
-
-
 spring:
   datasource:
-     url: jdbc:mysql://localhost:3306/jpa_mysql?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=true&amp;autoReconnect=true
+     url: jdbc:mysql://localhost:3306/fly?createDatabaseIfNotExist=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=true&amp;autoReconnect=true
      driver-class-name: com.mysql.jdbc.Driver
      username: root
      password: root
@@ -40,17 +37,3 @@ server:
 
 security.sessions: if-required
 
-myProps: #自定义的属性和值  
-  simpleProp: simplePropValue  
-  arrayProps: 1,2,3,4,5  
-  listProp1:  
-    - name: abc  
-      value: abcValue  
-    - name: efg  
-      value: efgValue  
-  listProp2:  
-    - config2Value1  
-    - config2Vavlue2  
-  mapProps:  
-    key1: value1  
-    key2: value2  
