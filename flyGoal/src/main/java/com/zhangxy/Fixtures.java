@@ -29,8 +29,8 @@ public class Fixtures implements Ordered, ApplicationListener<ContextRefreshedEv
         final JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.sina.cn");
         mailSender.setPort(25);
-        mailSender.setUsername("18510855440@sina.cn");
-        mailSender.setPassword("zxy312231");
+        mailSender.setUsername("12");
+        mailSender.setPassword("12");
         try {
             mailSender.testConnection();
         } catch (final MessagingException e) {
