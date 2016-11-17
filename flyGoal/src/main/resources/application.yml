@@ -17,8 +17,8 @@ spring:
   mail:
     host: smtp.sina.cn
     port: 25
-    username: 18510855440@sina.cn
-    password: zxy312231
+    username: 123@sina.cn
+    password: 123
     test-connection: true
   http:
     multipart:
@@ -34,6 +34,9 @@ logging:
 server:
   port: 9000
   contextPath: /fly
+management:
+  address: 127.0.0.1
+  port: 9001
 
 security.sessions: if-required
 
