@@ -13,11 +13,12 @@ package com.zhangxy.service.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,39 +28,25 @@ import com.zhangxy.entity.User;
 import com.zhangxy.repository.UserRepository;
 import com.zhangxy.service.UsersService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Repository
 @Transactional
 public class UsersServiceImpl implements UsersService {
 
-    @PersistenceContext
+    @Autowired
     private EntityManager em;
     @Autowired
     private UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-        User user = null;
-        try {
-            user = this.getUserByUserName(username);
-        } catch (final Exception e) {
-            e.printStackTrace();
-            UsersServiceImpl.log.error("根据用户名获取用户异常！！");
-            throw new UsernameNotFoundException("方法异常");
-        }
-        if (user == null) {
-            throw new UsernameNotFoundException("该用户不存在");
-        }
-        return user;
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
 
     @Override
     public User getUserByUserName(final String username) {
         final QUser qUser = QUser.user;
         final JPAQuery<User> query = new JPAQuery<>(this.em);
-        return query.select(qUser).where(qUser.username.eq(username)).fetchOne();
+        return query.from(qUser).select(qUser).where(qUser.username.contains(username)).fetchOne();
     }
 
     @Override
@@ -69,7 +56,14 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public User save(final User user) {
+        user.setPassword(this.passwordEncoder().encode(user.getPassword()));
         return this.userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+        return this.userRepository.findOneByUsername(username).orElseThrow(
+                () -> new UsernameNotFoundException(String.format("用户对应的用户名：%s 不存在！", username)));
     }
 
 }

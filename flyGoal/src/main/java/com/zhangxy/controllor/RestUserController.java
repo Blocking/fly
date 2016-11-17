@@ -2,6 +2,8 @@ package com.zhangxy.controllor;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zhangxy.entity.Customer;
 import com.zhangxy.entity.User;
+import com.zhangxy.repository.extend.CustomExetendRepository;
+import com.zhangxy.service.CustomerService;
 import com.zhangxy.service.UsersService;
 
 @RestController
@@ -17,6 +22,12 @@ public class RestUserController {
 
     @Autowired
     private UsersService userservice;
+
+    @Autowired
+    private CustomerService customService;
+    
+    @Resource
+    private CustomExetendRepository cer;
 
     @RequestMapping(value = "users", method = RequestMethod.GET)
     public List<User> getUsers() {
@@ -27,6 +38,12 @@ public class RestUserController {
     @RequestMapping(value = "getUser", method = RequestMethod.GET)
     public User getUserByName(@RequestParam(value = "name") final String name) {
         final User users = this.userservice.getUserByUserName(name);
+        return users;
+    }
+
+    @RequestMapping(value = "getCustomById", method = RequestMethod.GET)
+    public Customer getCustomById(@RequestParam(value = "id") final long id) {
+        final Customer users = this.customService.findById(id);
         return users;
     }
 

@@ -18,15 +18,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.zhangxy.entity.Customer;
 import com.zhangxy.entity.QCustomer;
+import com.zhangxy.repository.CustomerRepository;
 import com.zhangxy.service.CustomerService;
 
 /**
@@ -44,6 +45,9 @@ public class CustomerServiceImpl implements CustomerService {
     @PersistenceContext
     private EntityManager em;
 
+    @Autowired
+    private CustomerRepository res;
+
     /*
      * (non-Javadoc)
      * @see
@@ -52,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public Customer findById(final Long id) {
-        return this.em.find(Customer.class, id);
+        return this.res.findOne(id);
     }
 
     /*
@@ -62,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> findAll() {
         final QCustomer qCustomer = QCustomer.customer;
-        final JPQLQuery<Customer> query = new JPAQuery<>(this.em);
+        final JPAQuery<Customer> query = new JPAQuery<>(this.em);
         //        final JPQLQuery query = querydsl.createQuery();
         query.from(qCustomer);
         return query.fetch();

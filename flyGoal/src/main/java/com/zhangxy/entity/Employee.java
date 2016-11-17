@@ -1,8 +1,8 @@
 package com.zhangxy.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import com.zhangxy.entity.base.BaseEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,14 +11,13 @@ import lombok.Setter;
 @Entity
 @Setter
 @Getter
-public class Employee {
+public class Employee  extends BaseEntity{
 
-    private @Id @GeneratedValue Long id;
     private String firstName, lastName, description;
 
     protected Employee() {}
 
-    public Employee(String firstName, String lastName, String description) {
+    public Employee(final String firstName, final String lastName, final String description) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.description = description;

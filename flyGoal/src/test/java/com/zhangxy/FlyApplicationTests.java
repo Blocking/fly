@@ -1,5 +1,7 @@
 package com.zhangxy;
 
+import java.util.Date;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +13,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zhangxy.entity.User;
+import com.zhangxy.entity.Customer;
 import com.zhangxy.properties.TestProp;
-import com.zhangxy.repository.UserRepository;
+import com.zhangxy.repository.extend.CustomExetendRepository;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
+@RunWith(SpringRunner.class)
 public class FlyApplicationTests {
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
-    private UserRepository userRepository;
+    private CustomExetendRepository cr;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -31,10 +33,14 @@ public class FlyApplicationTests {
 
     @Test
     public void contextLoads() {
-        final User user = new User();
-        user.setUsername("admin");
-        user.setPassword(this.passwordEncoder().encode("123456"));
-        this.userRepository.save(user);
+//        final QCustomer cus = QCustomer.customer;
+//        final long count = this.cr.findAll(cus.firstName.contains("we")).size();
+//        Assert.assertEquals(5, count);
+        Customer cust = new Customer();
+        cust.setFirstName("你大爷！！");
+        cust.setLastName("你二大爷");
+        cust.setSignupDate(new Date());
+        cr.saveO(cust);
     }
 
     @Autowired

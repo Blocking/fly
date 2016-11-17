@@ -23,15 +23,15 @@ import com.zhangxy.entity.User;
 
 /**
  * Service interface for {@link User}s.
- * 
+ *
  * @author Oliver Gierke
  */
-public interface UsersService extends UserDetailsService{
-	
-	User getUserByUserName(String username);
-	
-	List<User> getAll();
-	
-	User save(User user);
-	
+public interface UsersService extends UserDetailsService {
+
+    User getUserByUserName(String username);
+
+    List<User> getAll();
+
+    User save(User user);
+
 }

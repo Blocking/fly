@@ -5,26 +5,24 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.Email;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.Data;
+import com.zhangxy.entity.base.BaseEntity;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
-public class User implements UserDetails{
+@Getter
+@Setter
+public class User extends BaseEntity implements UserDetails{
 	
 	private static final long serialVersionUID = 9059490884279123435L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
 	private String username;
 	private String password;
 	@Email

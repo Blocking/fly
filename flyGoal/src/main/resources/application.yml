@@ -34,6 +34,9 @@ logging:
 server:
   port: 9000
   contextPath: /fly
+management:
+  address: 127.0.0.1
+  port: 9001
 
 security.sessions: if-required
 
