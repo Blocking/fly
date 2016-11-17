@@ -22,10 +22,11 @@ public class Fixtures implements Ordered, ApplicationListener<ContextRefreshedEv
 
     @Override
     public void onApplicationEvent(final ContextRefreshedEvent event) {
-        this.configure();
+        configure();
     }
 
     public void testMail() {
+        System.out.println("ss");
         final JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.sina.cn");
         mailSender.setPort(25);
