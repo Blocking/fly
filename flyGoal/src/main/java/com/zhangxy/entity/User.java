@@ -27,6 +27,7 @@ public class User extends BaseEntity implements UserDetails{
 	private String password;
 	@Email
 	private String email;
+	
 	@OneToMany(fetch=FetchType.EAGER)
 	private List<Role> role;
 	@Override
