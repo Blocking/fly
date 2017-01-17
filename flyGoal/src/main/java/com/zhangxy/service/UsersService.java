@@ -24,7 +24,7 @@ import com.zhangxy.entity.User;
 /**
  * Service interface for {@link User}s.
  *
- * @author zhangxy
+ * @author Oliver Gierke
  */
 public interface UsersService extends UserDetailsService {
 
