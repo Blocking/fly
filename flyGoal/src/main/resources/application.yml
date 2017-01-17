@@ -14,12 +14,12 @@ spring:
      show-sql: true
      hibernate.ddl-auto: update
      
-  mail:
-    host: smtp.sina.cn
-    port: 25
-    username: 123@sina.cn
-    password: 123
-    test-connection: true
+#  mail:
+#    host: smtp.sina.cn
+#    port: 25
+#    username: 123@sina.cn
+#    password: 123
+#    test-connection: true
   http:
     multipart:
       max-file-size: 128MB
