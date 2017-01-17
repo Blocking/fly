@@ -25,7 +25,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.querydsl.jpa.impl.JPAQuery;
-import com.zhangxy.annotation.TestMy;
 import com.zhangxy.entity.Customer;
 import com.zhangxy.entity.QCustomer;
 import com.zhangxy.repository.CustomerRepository;
@@ -65,7 +64,6 @@ public class CustomerServiceImpl implements CustomerService {
      * @see example.springdata.jpa.showcase.before.CustomerService#findAll()
      */
     @Override
-    @TestMy
     public List<Customer> findAll() {
         final QCustomer qCustomer = QCustomer.customer;
         final JPAQuery<Customer> query = new JPAQuery<>(em);
