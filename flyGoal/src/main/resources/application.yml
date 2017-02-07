@@ -37,6 +37,10 @@ server:
 management:
   address: 127.0.0.1
   port: 9001
+  context-path: /fly_manage
+  security:
+    enabled: true
+    roles: SUPERROLE
 
 security.sessions: if-required
 
