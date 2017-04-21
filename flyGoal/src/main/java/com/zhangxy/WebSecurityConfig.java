@@ -25,9 +25,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http
         .authorizeRequests()
-        .antMatchers("/home").permitAll()
-        .antMatchers("/register").permitAll()
-        .antMatchers("/**").permitAll()
+                //        .antMatchers("/home").permitAll()
+                .antMatchers("/register").permitAll()
+                //        .antMatchers("/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .formLogin()
@@ -48,29 +48,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/webjars/**");
     }
 
-    //    @Autowired
-    //    private DataSource dataSource;
-
-    /*
-     * @Autowired public void configureGlobal(AuthenticationManagerBuilder auth)
-     * throws Exception { auth .inMemoryAuthentication()
-     * .withUser("user").password("password").roles("USER"); auth
-     * .jdbcAuthentication().dataSource(dataSource) .withDefaultSchema()
-     * .withUser("user").password("password").roles("USER"); }
-     */
-
     @Autowired
     private UserDetailsService userService;
 
     @Override
     protected void configure(final AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.userDetailsService(this.userService).passwordEncoder(this.passwordEncoder());
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     public UserDetailsService userDetailsServiceBean() throws Exception {
-        return this.userService;
+        return userService;
     }
 
 }

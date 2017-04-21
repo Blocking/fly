@@ -56,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public Customer findById(final Long id) {
-        return this.res.findOne(id);
+        return res.findOne(id);
     }
 
     /*
@@ -66,10 +66,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> findAll() {
         final QCustomer qCustomer = QCustomer.customer;
-        final JPAQuery<Customer> query = new JPAQuery<>(this.em);
+        final JPAQuery<Customer> query = new JPAQuery<>(em);
         //        final JPQLQuery query = querydsl.createQuery();
-        query.from(qCustomer);
-        return query.fetch();
+        return query.from(qCustomer).fetch();
         //        return this.em.createQuery("select c from Customer c", Customer.class).getResultList();
     }
 
@@ -81,7 +80,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> findAll(final int page, final int pageSize) {
 
-        final TypedQuery<Customer> query = this.em.createQuery("select c from Customer c", Customer.class);
+        final TypedQuery<Customer> query = em.createQuery("select c from Customer c", Customer.class);
 
         query.setFirstResult(page * pageSize);
         query.setMaxResults(pageSize);
@@ -100,10 +99,10 @@ public class CustomerServiceImpl implements CustomerService {
 
         // Is new?
         if (customer.getId() == null) {
-            this.em.persist(customer);
+            em.persist(customer);
             return customer;
         } else {
-            return this.em.merge(customer);
+            return em.merge(customer);
         }
     }
 
@@ -117,7 +116,7 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> findByLastname(final String lastname, final int page, final int pageSize) {
 
         final TypedQuery<Customer> query =
-                this.em.createQuery("select c from Customer c where c.lastname = ?1", Customer.class);
+                em.createQuery("select c from Customer c where c.lastname = ?1", Customer.class);
 
         query.setParameter(1, lastname);
         query.setFirstResult(page * pageSize);
@@ -132,7 +131,7 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setFirstName(firstName);
         customer.setLastName(lastName);
         customer.setSignupDate(signupDate);
-        this.em.persist(customer);
+        em.persist(customer);
         return customer;
     }
 
@@ -141,7 +140,7 @@ public class CustomerServiceImpl implements CustomerService {
         final String sqlName = ("%" + name + "%").toLowerCase();
         final String sql =
                 "select c.* from customer c where (LOWER( c.first_name ) LIKE :fn OR LOWER( c.last_name ) LIKE :ln)";
-        return this.em.createNativeQuery(sql, Customer.class)
+        return em.createNativeQuery(sql, Customer.class)
                 .setParameter("fn", sqlName)
                 .setParameter("ln", sqlName)
                 .getResultList();
@@ -150,30 +149,30 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional(readOnly = true)
     public List<Customer> getAllCustomers() {
-        return this.em.createQuery("SELECT * FROM " + Customer.class.getName()).getResultList();
+        return em.createQuery("SELECT * FROM " + Customer.class.getName()).getResultList();
     }
 
     @Override
     @Cacheable(CustomerServiceImpl.CUSTOMERS_REGION)
     @Transactional(readOnly = true)
     public Customer getCustomerById(final Long id) {
-        return this.em.find(Customer.class, id);
+        return em.find(Customer.class, id);
     }
 
     @CacheEvict(CustomerServiceImpl.CUSTOMERS_REGION)
     public void deleteCustomer(final Long id) {
-        final Customer customer = this.getCustomerById(id);
-        this.em.remove(customer);
+        final Customer customer = getCustomerById(id);
+        em.remove(customer);
     }
 
     @Override
     @CacheEvict(value = CustomerServiceImpl.CUSTOMERS_REGION, key = "#id")
     public void updateCustomer(final Long id, final String fn, final String ln, final Date birthday) {
-        final Customer customer = this.getCustomerById(id);
+        final Customer customer = getCustomerById(id);
         customer.setLastName(ln);
         customer.setSignupDate(birthday);
         customer.setFirstName(fn);
         //sessionFactory.getCurrentSession().update(customer);
-        this.em.merge(customer);
+        em.merge(customer);
     }
 }
